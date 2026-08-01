@@ -1,0 +1,19 @@
+generated: '2026-07-20'
+method: derived
+source: openapi/picsart-genai-tools-api-openapi-original.yml, openapi/picsart-image-tools-api-openapi-original.yml,
+  openapi/picsart-variable-data-tools-api-openapi-original.yml, openapi/picsart-video-tools-api-openapi-original.yml
+summary:
+  types:
+  - apiKey
+  api_key_in:
+  - header
+schemes:
+- name: apiKey
+  type: apiKey
+  in: header
+  parameter: X-Picsart-API-Key
+  sources:
+  - openapi/picsart-genai-tools-api-openapi-original.yml
+  - openapi/picsart-image-tools-api-openapi-original.yml
+  - openapi/picsart-variable-data-tools-api-openapi-original.yml
+  - openapi/picsart-video-tools-api-openapi-original.yml

@@ -1,0 +1,52 @@
+generated: '2026-07-20'
+method: searched
+source: https://docs.picsart.io/docs/picsart-creative-apis-sdk-libraries
+description: >-
+  First-party Picsart Creative APIs client libraries and developer tools.
+  Verified against the public npm registry and the PicsArt GitHub organization
+  (https://github.com/PicsArt). The TypeScript SDK and the gen-ai CLI are
+  published to npm; the Python and Java/Kotlin SDKs are distributed from their
+  GitHub source repositories (not published to PyPI or Maven Central under a
+  discoverable coordinate at fetch time). Registry HTTP status recorded at fetch
+  time.
+packages:
+  - language: typescript
+    registry: npm
+    name: picsart-creative-apis-ts-sdk
+    url: https://www.npmjs.com/package/picsart-creative-apis-ts-sdk
+    source: https://github.com/PicsArt/picsart-creative-apis-ts-sdk
+    install: npm install picsart-creative-apis-ts-sdk
+    version: 1.0.0
+    official: true
+    note: >-
+      Creative APIs SDK for TypeScript/JavaScript. Helper methods for
+      Programmable Image APIs (Remove Background, Upscale, Enhance, Effects) and
+      GenAI APIs (Text2Image, Replace, Expand Image).
+  - language: python
+    registry: github
+    name: picsart-creative-apis-py-sdk
+    url: https://github.com/PicsArt/picsart-creative-apis-python-sdk
+    source: https://github.com/PicsArt/picsart-creative-apis-python-sdk
+    install: pip install git+https://github.com/PicsArt/picsart-creative-apis-python-sdk
+    official: true
+    note: Fully supported Creative APIs SDK for Python (not published to PyPI at fetch time).
+  - language: java
+    registry: github
+    name: picsart-creative-apis-java-sdk
+    url: https://github.com/PicsArt/picsart-creative-apis-java-sdk
+    source: https://github.com/PicsArt/picsart-creative-apis-java-sdk
+    install: "see repo README (Gradle/Maven build from source)"
+    official: true
+    note: Fully supported Creative APIs SDK for Java and Kotlin projects.
+  - language: javascript
+    registry: npm
+    name: "@picsart/gen-ai"
+    url: https://www.npmjs.com/package/@picsart/gen-ai
+    source: https://github.com/PicsArt/picsart-mcp-cli-docs
+    install: npm install -g @picsart/gen-ai
+    version: 2.46.1
+    official: true
+    note: >-
+      Picsart gen-ai CLI + MCP toolkit. Generates AI images, video and audio
+      across 140+ models from the terminal or any AI agent. Requires Node.js 22+.
+      Also installable via the Homebrew tap PicsArt/homebrew-picsart-creative-apis-cli.

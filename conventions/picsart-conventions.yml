@@ -1,0 +1,63 @@
+generated: '2026-07-20'
+method: searched
+source: https://docs.picsart.io/docs/sync-async-execution
+description: >-
+  Cross-cutting request/response semantics for the Picsart Creative APIs,
+  captured from the developer docs and derived from the OpenAPI. Covers auth,
+  sync/async execution, result polling, rate-limit signaling, request content
+  types, and the error envelope.
+authentication:
+  style: api-key
+  header: X-Picsart-API-Key
+  docs: https://docs.picsart.io/docs/creative-apis-authentication
+  cross_ref: authentication/picsart-authentication.yml
+idempotency:
+  supported: false
+  note: >-
+    Picsart does not document an idempotency-key header or contract. Long-running
+    operations use async job identifiers (transaction_id / inference id) plus a
+    dedicated get-result operation rather than idempotent retries.
+async_execution:
+  standard: RFC 7240 (Prefer header)
+  default: synchronous (GenAI generation services default to async)
+  force_async_header: "Prefer: respond-async"
+  bounded_wait_header: "Prefer: wait=<1-600 seconds>"
+  applied_response_header: Preference-Applied
+  async_status_code: 202 Accepted
+  result_pattern: >-
+    Async jobs return a transaction_id / inference id; poll the matching
+    *-getresult operation (e.g. image-getresult, genai-text2image-getresult,
+    video-getresult) until status is success or error.
+  genai_job_statuses: [success, error, processing]
+pagination:
+  supported: false
+  note: Operations are single-resource image/video transforms; no list pagination.
+request_content_types:
+  types:
+    - application/json
+    - multipart/form-data
+    - application/x-www-form-urlencoded
+  note: Images may be supplied as URLs or base64 DATA URIs in image_url fields; multipart only needed for true inline binary upload.
+rate_limit_signaling:
+  headers:
+    - name: X-Picsart-RateLimit-Limit
+      sample: '500'
+      desc: Allowed quota count in total (200 OK only)
+    - name: X-Picsart-RateLimit-Available
+      sample: '499'
+      desc: Available quota in the interval (200 OK only)
+    - name: X-Picsart-RateLimit-Reset-Time
+      sample: '60'
+      desc: Seconds before the rate-limit counter resets
+    - name: X-Picsart-Credit-Available
+      sample: '20'
+      desc: Remaining credit balance
+  limit: 500 requests per minute (subscription accounts)
+  error_status: 429
+  cross_ref: rate-limits/picsart-rate-limits.yml
+error_envelope:
+  content_type: application/json
+  shape: '{ "code": 0, "message": "string", "detail": "string" }'
+  cross_ref: errors/picsart-error-codes.yml
+versioning:
+  cross_ref: lifecycle/picsart-lifecycle.yml

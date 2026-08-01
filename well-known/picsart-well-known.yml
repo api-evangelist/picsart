@@ -1,0 +1,28 @@
+generated: '2026-07-20'
+method: searched
+source: live probes of /.well-known/ on Picsart hosts
+description: >-
+  Probe of the /.well-known/ discovery surface across Picsart web and API hosts.
+  No well-known documents were served (200) at fetch time; absence is recorded as
+  valid data. The api.picsart.io host returns 401 to unauthenticated requests
+  (API-key gated) rather than exposing discovery documents.
+hosts:
+  - host: https://picsart.io
+    documents:
+      - {path: /.well-known/security.txt, status: 404}
+      - {path: /.well-known/openid-configuration, status: 404}
+      - {path: /.well-known/oauth-authorization-server, status: 404}
+      - {path: /.well-known/api-catalog, status: 404}
+      - {path: /.well-known/ai-plugin.json, status: 404}
+  - host: https://picsart.com
+    documents:
+      - {path: /.well-known/security.txt, status: 404}
+      - {path: /.well-known/ai-plugin.json, status: 404}
+  - host: https://docs.picsart.io
+    documents:
+      - {path: /.well-known/security.txt, status: 404}
+  - host: https://api.picsart.io
+    documents:
+      - {path: /.well-known/security.txt, status: 401}
+      - {path: /.well-known/openid-configuration, status: 401}
+      - {path: /.well-known/oauth-authorization-server, status: 401}

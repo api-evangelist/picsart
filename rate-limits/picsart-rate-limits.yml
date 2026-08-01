@@ -1,0 +1,29 @@
+generated: '2026-07-20'
+method: searched
+source: https://docs.picsart.io/docs/creative-apis-quotas-and-limits
+description: >-
+  Published quotas and rate limits for the Picsart Creative APIs. All operations
+  are rate limited; limits are signaled via response headers and 429 responses.
+rate_limits:
+  - scope: account
+    limit_count: 500
+    interval: minute
+    applies_to: subscription accounts
+    error_status: 429
+    reset_header: X-Picsart-RateLimit-Reset-Time
+  - scope: application
+    limit_count: null
+    interval: minute
+    note: Application-scoped limiting available on request via Developer Support.
+free_tier:
+  credits: 200
+  note: Free/demo accounts get 200 complimentary credits; exhaustion returns 402 Payment Required.
+headers:
+  - X-Picsart-RateLimit-Limit
+  - X-Picsart-RateLimit-Available
+  - X-Picsart-RateLimit-Reset-Time
+  - X-Picsart-Credit-Available
+guidance:
+  - Watch for 429 and honor X-Picsart-RateLimit-Reset-Time.
+  - Use exponential back-off with jitter.
+  - Contact apibusiness@picsart.io for quota increases.

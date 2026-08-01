@@ -1,0 +1,33 @@
+generated: '2026-07-20'
+method: derived
+source: openapi/*, https://docs.picsart.io/docs/sync-async-execution
+description: >-
+  Cross-cutting standards conformance for the Picsart Creative APIs, derived from
+  the OpenAPI specs and the developer docs. No published security/compliance
+  certification program (SOC 2 / ISO 27001 / PCI / HIPAA) was found on a public
+  trust page at fetch time, so no Compliance pointer is asserted.
+standards:
+  - id: openapi-3.0
+    conforms: true
+    evidence: Image, Video, and GenAI specs are OpenAPI 3.0.0
+  - id: openapi-3.1
+    conforms: true
+    evidence: Variable Data Content spec is OpenAPI 3.1.0
+  - id: rfc7240-prefer-header
+    conforms: true
+    evidence: Sync/async execution uses the Prefer header with respond-async and Preference-Applied
+  - id: rfc6750-bearer
+    conforms: false
+    evidence: Auth is a custom apiKey header (X-Picsart-API-Key), not OAuth2 bearer
+  - id: oauth2
+    conforms: false
+    evidence: No oauth2 securityScheme declared in any spec
+  - id: rfc9457-problem-details
+    conforms: false
+    evidence: Errors use a custom { code, message, detail } JSON envelope, not application/problem+json
+  - id: http-status-semantics
+    conforms: true
+    evidence: Conventional HTTP status codes across all four specs (400-431, 500-504)
+  - id: rate-limit-headers
+    conforms: true
+    evidence: X-Picsart-RateLimit-* response headers on all operations

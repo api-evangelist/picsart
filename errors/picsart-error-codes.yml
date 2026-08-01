@@ -1,0 +1,70 @@
+generated: '2026-07-20'
+method: searched
+source: https://docs.picsart.io/docs/creative-apis-error-codes
+docs: https://docs.picsart.io/docs/creative-apis-error-responses
+format: http-status
+description: >-
+  Picsart Creative APIs use conventional HTTP status codes to signal success or
+  failure. Errors are not RFC 9457 problem+json; they return a consistent JSON
+  envelope. This catalog is captured verbatim from the published error reference
+  and applies across the Image, Video, GenAI, and Variable Data APIs (all four
+  specs declare the 400/401/402/403/404/405/413/415/422/429/431/500/503 set).
+envelope:
+  content_type: application/json
+  shape: '{ "code": 0, "message": "string", "detail": "string" }'
+  fields:
+    - name: code
+      description: Numeric error code
+    - name: message
+      description: Human-readable summary
+    - name: detail
+      description: Additional troubleshooting detail
+errors:
+  - status: 400
+    title: Bad request
+    remediation: Review request syntax and required parameters.
+  - status: 401
+    title: Unauthorized
+    remediation: Provide a valid API key in the X-Picsart-API-Key header (or query string).
+  - status: 402
+    title: Payment Required
+    remediation: Pre-purchased credits exhausted or subscription limit reached without overdraft; purchase credits or upgrade.
+  - status: 403
+    title: Forbidden
+    remediation: The API key is known but lacks access rights to the resource.
+  - status: 404
+    title: Not Found
+    remediation: Verify the request URL and API version.
+  - status: 405
+    title: Method Not Allowed
+    remediation: Use the correct HTTP verb for the endpoint (e.g. POST not GET).
+  - status: 406
+    title: Not Acceptable
+    remediation: "Send Accept: application/json (recommended; intended to become required)."
+  - status: 413
+    title: Request Entity Too Large
+    remediation: Reduce payload size; respect published max file size.
+  - status: 415
+    title: Unsupported Media Type
+    remediation: "Set the correct Content-Type (JSON/multipart) for POST/PUT."
+  - status: 422
+    title: Unprocessable Content
+    remediation: Input parameters failed validation, or a referenced input URL returned 404/429.
+  - status: 429
+    title: Too Many Requests
+    remediation: Rate limit exceeded; honor X-Picsart-RateLimit-Reset-Time and back off exponentially.
+  - status: 431
+    title: Request Header Fields Too Large
+    remediation: Reduce request header size.
+  - status: 500
+    title: Internal Server Error
+    remediation: Retry later; check status.picsart.io.
+  - status: 503
+    title: Service Unavailable
+    remediation: Temporary outage/maintenance; check status.picsart.io.
+  - status: 504
+    title: Too Long Processing
+    remediation: Reduce input size or use async execution (Prefer header) for long-running jobs.
+support:
+  status_page: https://status.picsart.io
+  email: apitechsupport@picsart.com

@@ -1,0 +1,14 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Picsart Programmable Video APIs
+  version: 1.0.0
+extends: openapi/picsart-video-tools-api-openapi-original.yml
+actions:
+  - target: $.info
+    update:
+      x-apievangelist-enriched: '2026-07-20'
+      x-apievangelist-auth: X-Picsart-API-Key (apiKey header)
+      x-apievangelist-async: RFC 7240 Prefer header; poll video-getresult for async jobs
+      x-apievangelist-rate-limit: 500 req/min; X-Picsart-RateLimit-* headers
+      x-apievangelist-error-envelope: '{ code, message, detail }'
+      x-apievangelist-docs: https://docs.picsart.io/reference/

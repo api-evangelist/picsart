@@ -1,0 +1,20 @@
+generated: '2026-07-20'
+method: searched
+source: https://docs.picsart.io/docs/creative-apis-quotas-and-limits
+description: >-
+  Free-tier / trial surface for the Picsart Creative APIs. Picsart does not
+  publish a separate test-vs-live key scheme or magic test values (test cards,
+  fixtures); instead every new developer account gets a complimentary credit
+  balance to trial live endpoints. Captured verbatim from the docs — no test
+  values were invented.
+test_vs_live:
+  scheme: none
+  note: A single production API key (X-Picsart-API-Key) is used; there is no separate test key prefix or mode.
+free_trial:
+  credits: 200
+  scope: usable from any app on the account
+  exhausted_response: '402 Payment Required (body: { "message": "Payment Required" })'
+  get_key: https://console.picsart.io/
+demo_note: >-
+  The error docs reference a demo path form (api.picsart.io/tools/demo/<service>)
+  used in curl examples; there is no documented standalone sandbox environment.

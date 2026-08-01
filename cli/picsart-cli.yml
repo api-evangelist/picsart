@@ -1,0 +1,27 @@
+generated: '2026-07-20'
+method: searched
+source: https://picsart.com/gen-ai-cli/
+description: >-
+  Picsart gen-ai CLI — a first-party command-line tool (and MCP toolkit) to
+  generate AI images, video, and audio across 140+ models from 28 providers
+  directly from the terminal or any AI agent. The binary is catalogued in
+  packages/ (npm @picsart/gen-ai); this artifact is its command/usage surface.
+name: "@picsart/gen-ai"
+docs: https://picsart.com/gen-ai-cli/
+repo: https://github.com/PicsArt/picsart-mcp-cli-docs
+install:
+  - method: npm
+    command: npm install -g @picsart/gen-ai
+    requires: Node.js 22+
+  - method: homebrew
+    command: brew install picsart/... (tap PicsArt/homebrew-picsart-creative-apis-cli)
+authentication:
+  scheme: apiKey
+  header: X-Picsart-API-Key
+  note: Same key as the REST APIs / MCP server; from https://console.picsart.io/
+capabilities:
+  - Generate AI images, video, and audio across 140+ models (Sora, Veo, Kling, Seedance, Nano Banana, Flux, GPT Image, ElevenLabs, Recraft)
+  - Runs standalone in the terminal or as an MCP server for agents (Claude, Cursor, ChatGPT, Codex)
+related:
+  agent_skills: "npx skills add PicsArt/gen-ai-skills"
+  mcp: mcp/picsart-mcp.yml

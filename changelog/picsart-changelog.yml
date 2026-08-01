@@ -1,0 +1,35 @@
+generated: '2026-07-20'
+method: searched
+source: https://docs.picsart.io/docs/creative-apis-releases
+description: >-
+  Recent window of the Picsart Creative APIs release notes. The live release-notes
+  page is the source of truth; this captures the most recent dated entries.
+scheme: dated (monthly release notes)
+current_version:
+  image: "1"
+  video: v1
+  genai: v1
+entries:
+  - date: '2026-04'
+    highlights:
+      - "AI Hub: WAN 2.7 (Alibaba) added for Text-to-Video and Image-to-Video (10 credits/sec)."
+      - "Sync/async execution standardized on the HTTP Prefer header (RFC 7240); mode parameter deprecated."
+      - "Request content types expanded to application/json and x-www-form-urlencoded (in addition to multipart/form-data)."
+      - "BMP added as a supported input image format."
+      - "GenAI video export parameter added to Text-to-Video and Image-to-Video."
+    breaking:
+      - "*_id input parameters (image_id, reference_image_id, mask_id) removal deadline June 1, 2026; migrate to *_url or binary upload."
+      - "GenAI job statuses standardized to success/error/processing."
+  - date: '2026-03'
+    highlights:
+      - "New GenAI services: Edit Image with a Prompt, Remove Object, Text-to-Speech, Text-to-Sound."
+      - "Image API: Extract Image Colors added."
+      - "New models from Anthropic, Google, and Seedream across multiple services; OpenAI Sora removed."
+    breaking: []
+  - date: '2026-02'
+    highlights:
+      - "Text-to-Video and Image-to-Video launched; AI Hub adds 51 video generation models across 12 providers."
+      - "Text2Text supports 21 models across OpenAI, Anthropic, Google."
+      - "New model providers: Anthropic, Kling, LTX, Luma, Minimax, Ovi, Pika, Seedance."
+    breaking:
+      - "Google image-generation models (Gemini 2.5/2.0 Flash Image, Imagen 3 cap 002) removed from AI Hub."

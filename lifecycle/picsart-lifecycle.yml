@@ -1,0 +1,35 @@
+generated: '2026-07-20'
+method: searched
+source: https://docs.picsart.io/docs/creative-apis-versioning
+description: >-
+  Versioning, deprecation, and operational-transparency posture for the Picsart
+  Creative APIs, captured from the published versioning policy, release notes, and
+  status page.
+versioning:
+  scheme: uri-path
+  pattern: "v<N> or /<N.0>/ suffix in the host path (e.g. video-api.picsart.io/v1, api.picsart.io/tools/1.0)"
+  current:
+    image: "1 (tools/1.0)"
+    video: v1
+    genai: v1
+    variable-data: v1
+  policy: expand-contract (add new elements without changing the version; new version only on breaking changes)
+  docs: https://docs.picsart.io/docs/creative-apis-versioning
+deprecation:
+  policy_url: https://docs.picsart.io/docs/creative-apis-versioning
+  sunset_header: false
+  note: >-
+    Older API versions are not being retired; opt-in to new versions from the
+    dashboard. Field-level deprecations are announced in the release notes with a
+    dated deadline (e.g. *_id input parameters removed June 1, 2026 across Image
+    and GenAI APIs; migrate to *_url or binary upload inputs).
+  active_deprecations:
+    - {item: "*_id input parameters (image_id, reference_image_id, mask_id)", deadline: '2026-06-01', migrate_to: "*_url or binary upload inputs"}
+    - {item: "mode parameter (sync/async)", replacement: "Prefer header (RFC 7240)", status: deprecated}
+status_page: https://status.picsart.io
+sla:
+  uptime_target: "99.5%"
+  source: https://docs.picsart.io/ (documented enterprise uptime guarantee)
+release_notes: https://docs.picsart.io/docs/creative-apis-releases
+deprecated_operations:
+  - openapi/picsart-image-tools-api-openapi-original.yml#image-generate-texture

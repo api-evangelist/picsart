@@ -1,0 +1,27 @@
+generated: '2026-07-20'
+method: generated
+source: openapi/* (operationIds verified against the specs)
+description: >-
+  Packaged Agent Skills for marquee Picsart Creative API flows. Grounded in real
+  operationIds. Note Picsart also publishes its own agent skills via
+  `npx skills add PicsArt/gen-ai-skills` for the gen-ai CLI/MCP toolkit.
+provider_published_skills:
+  install: npx skills add PicsArt/gen-ai-skills
+  source: https://github.com/PicsArt/gen-ai-skills
+skills:
+  - file: picsart-remove-background.md
+    name: Remove image background with Picsart
+    api: openapi/picsart-image-tools-api-openapi-original.yml
+    operations: [image-remove-background, image-getresult, image-credits-balance]
+  - file: picsart-upscale-image.md
+    name: Upscale an image with Picsart
+    api: openapi/picsart-image-tools-api-openapi-original.yml
+    operations: [image-upscale, image-ultra-upscale, image-ultra-upscale-getresult, image-getresult]
+  - file: picsart-text2image.md
+    name: Generate an image from text with Picsart GenAI
+    api: openapi/picsart-genai-tools-api-openapi-original.yml
+    operations: [genai-text2image, genai-text2image-getresult, genai-credits-balance]
+  - file: picsart-video-remove-background.md
+    name: Remove video background with Picsart
+    api: openapi/picsart-video-tools-api-openapi-original.yml
+    operations: [video-upload, video-remove-background, video-getresult, video-credits-balance]

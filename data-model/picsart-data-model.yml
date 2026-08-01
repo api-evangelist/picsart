@@ -1,0 +1,50 @@
+generated: '2026-07-20'
+method: derived
+source: openapi/*
+description: >-
+  Entity graph derived from the Picsart Creative APIs OpenAPI specs. Picsart is a
+  transformation API rather than a CRUD/resource API: the durable identifiers are
+  the uploaded-asset reference (transaction_id / image_id) and the async job
+  reference (transaction_id / inference id), which callers pass into transform and
+  get-result operations.
+entities:
+  - name: UploadedAsset
+    id_field: transaction_id
+    also_referenced_as: [image_id, reference_image_id, mask_id]
+    created_by: [image-upload, video-upload, vd-... upload]
+    note: >-
+      An image/video uploaded once and reused across transformations to avoid
+      re-uploading. Note *_id inputs are deprecated (removal 2026-06-01) in favor
+      of *_url / binary upload.
+  - name: AsyncJob
+    id_field: transaction_id / inference_id
+    created_by:
+      - image-ultra-upscale
+      - image-design-import
+      - genai-text2image
+      - genai-text2sticker
+      - genai-generate-logo
+      - genai-image-inpainting
+      - genai-text2video
+      - genai-image2video
+      - genai-text2speech
+      - video-upscale-fps
+      - video-transcribe-audio
+      - vd-export-replay
+    statuses: [success, error, processing]
+  - name: Result
+    id_field: transaction_id / inference_id
+    retrieved_by:
+      - image-getresult
+      - genai-text2image-getresult
+      - genai-image-inpainting-getresult
+      - genai-text2video-getresult
+      - video-getresult
+      - vd-export-replay-getresult
+  - name: CreditBalance
+    id_field: account
+    read_by: [image-credits-balance, video-credits-balance, genai-credits-balance, vd-credits-balance]
+relationships:
+  - {from: AsyncJob, to: Result, type: has_one, via: transaction_id/inference_id}
+  - {from: Result, to: AsyncJob, type: belongs_to, via: transaction_id/inference_id}
+  - {from: UploadedAsset, to: AsyncJob, type: has_many, via: transaction_id (as input)}
