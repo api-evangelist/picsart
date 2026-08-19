@@ -2,11 +2,9 @@ generated: '2026-07-20'
 method: searched
 status: published
 source: https://docs.picsart.io/docs/mcp-creative-apis
-description: >-
-  Official Picsart Creative APIs Model Context Protocol (MCP) server. Exposes the
-  same functionality as the REST APIs through MCP so AI editors (Cursor, Windsurf,
-  Claude Desktop, GitHub Copilot) and agent runtimes (OpenClaw, Hermes) can call
-  Picsart tools and query the documentation directly.
+description: Official Picsart Creative APIs Model Context Protocol (MCP) server. Exposes the same functionality
+  as the REST APIs through MCP so AI editors (Cursor, Windsurf, Claude Desktop, GitHub Copilot) and agent
+  runtimes (OpenClaw, Hermes) can call Picsart tools and query the documentation directly.
 server:
   name: picsart
   transport: streamable-http
@@ -18,35 +16,43 @@ authentication:
   header: X-Picsart-API-Key
   note: Same API key used for the REST APIs; generate it at https://console.picsart.io/
 tool_summary:
-  dedicated_tools: "90+ (one per API action across Image, Video, GenAI, Variable Data)"
+  dedicated_tools: 90+ (one per API action across Image, Video, GenAI, Variable Data)
   generic_tools:
-    - list-endpoints
-    - get-endpoint
-    - get-request-body
-    - get-response-schema
-    - list-security-schemes
-    - search-specs
-    - list-specs
-    - execute-request
-    - get-code-snippet
+  - list-endpoints
+  - get-endpoint
+  - get-request-body
+  - get-response-schema
+  - list-security-schemes
+  - search-specs
+  - list-specs
+  - execute-request
+  - get-code-snippet
 tools_sample:
-  - name: image-remove-background
-    description: Remove & change background
-    source_operation: openapi/picsart-image-tools-api-openapi-original.yml#image-remove-background
-  - name: image-upscale
-    description: Upscale an image
-    source_operation: openapi/picsart-image-tools-api-openapi-original.yml#image-upscale
-  - name: genai-text2image
-    description: Generate an image from a text prompt
-    source_operation: openapi/picsart-genai-tools-api-openapi-original.yml#genai-text2image
-  - name: video-remove-background
-    description: Remove & change background from videos
-    source_operation: openapi/picsart-video-tools-api-openapi-original.yml#video-remove-background
+- name: image-remove-background
+  description: Remove & change background
+  source_operation: openapi/picsart-image-tools-api-openapi-original.yml#image-remove-background
+- name: image-upscale
+  description: Upscale an image
+  source_operation: openapi/picsart-image-tools-api-openapi-original.yml#image-upscale
+- name: genai-text2image
+  description: Generate an image from a text prompt
+  source_operation: openapi/picsart-genai-tools-api-openapi-original.yml#genai-text2image
+- name: video-remove-background
+  description: Remove & change background from videos
+  source_operation: openapi/picsart-video-tools-api-openapi-original.yml#video-remove-background
 clients:
-  - Cursor
-  - Windsurf
-  - Claude Desktop
-  - VS Code (GitHub Copilot)
-  - GitHub Copilot CLI
-  - OpenClaw
-  - Hermes Agent
+- Cursor
+- Windsurf
+- Claude Desktop
+- VS Code (GitHub Copilot)
+- GitHub Copilot CLI
+- OpenClaw
+- Hermes Agent
+deployment:
+  mode: remote
+  endpoint: https://mcp.picsart.io/v1
+  verified: probed
+  probe: live
+  tools: 96
+  checked: '2026-08-12'
+  source: catalog MCP census
