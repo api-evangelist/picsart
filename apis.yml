@@ -311,6 +311,9 @@ apis:
   - type: OpenAPI
     url: openapi/picsart-watermark-api-openapi.yml
 common:
+- type: CapabilityMap
+  url: capabilities/picsart-capability-edges.yml
+  name: Picsart Business Capability Map
 - type: Overlay
   url: overlays/picsart-genai-overlay.yaml
 - type: Website
