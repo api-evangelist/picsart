@@ -2,11 +2,9 @@ openapi: 3.2.0
 info:
   version: '1.0'
   title: Picsart Programmable Video Transcriptions API
-  description: '[Official technical documentation portal](https://docs.picsart.io/)
+  description: 'Official technical documentation portal
 
-    [Developer Guidelines](https://picsart.io/terms)
-
-    '
+    Developer Guidelines'
 servers:
 - url: https://video-api.picsart.io/v1
   description: Production
@@ -19,7 +17,25 @@ paths:
     post:
       summary: Transcribe Audio
       operationId: video-transcribe-audio
-      description: "Transcribe your audio or video files. The input file can have one of the following mime types:\n  * audio/flac\n  * audio/mpeg\n  * audio/x-m4a\n  * audio/ogg\n  * audio/x-wav\n  * video/mp4\n  * video/mpeg\n  * video/webm\nNote, that the maximum audio/video file size supported is 25mb.\n"
+      description: 'Transcribe your audio or video files. The input file can have one of the following mime types:
+
+        * audio/flac
+
+        * audio/mpeg
+
+        * audio/x-m4a
+
+        * audio/ogg
+
+        * audio/x-wav
+
+        * video/mp4
+
+        * video/mpeg
+
+        * video/webm
+
+        Note, that the maximum audio/video file size supported is 25mb.'
       tags:
       - Transcriptions
       requestBody:
@@ -60,9 +76,7 @@ paths:
     get:
       summary: Get the Transcribe Audio result
       operationId: video-transcribe-audio-getresult
-      description: 'Use this method, along with transaction_id, to retrieve the audio transcription.
-
-        '
+      description: Use this method, along with transaction_id, to retrieve the audio transcription.
       parameters:
       - in: path
         name: transaction_id
@@ -104,9 +118,285 @@ paths:
         '503':
           $ref: '#/components/responses/503'
 components:
+  schemas:
+    401_Error:
+      type: object
+      properties:
+        code:
+          type: integer
+          example: 401
+        message:
+          type: string
+          example: Unauthorized
+        detail:
+          type: string
+      required:
+      - detail
+    TranscribeFileParameters:
+      type: object
+      properties:
+        file_url:
+          type: string
+          description: Source video or audio URL. The maximum file size is 25mb.
+          maxLength: 2083
+          minLength: 1
+          format: uri
+    TranscribeParameters:
+      type: object
+      properties:
+        language:
+          type: string
+          default: en
+          enum:
+          - af
+          - ar
+          - am
+          - az
+          - be
+          - bs
+          - bg
+          - ca
+          - zh
+          - hr
+          - cs
+          - da
+          - nl
+          - en
+          - et
+          - fi
+          - fr
+          - gl
+          - de
+          - el
+          - he
+          - hi
+          - hu
+          - is
+          - id
+          - it
+          - ja
+          - kn
+          - kk
+          - ko
+          - lv
+          - lt
+          - mk
+          - ms
+          - mr
+          - mi
+          - ne
+          - false
+          - fa
+          - pl
+          - pt
+          - ro
+          - ru
+          - sr
+          - sk
+          - sl
+          - es
+          - sw
+          - sv
+          - tl
+          - ta
+          - th
+          - tr
+          - uk
+          - ur
+          - vi
+          - cy
+          description: "Optionally select one of the languages in the 2-character format (ISO 639-1). Options are as follows:\n  * Afrikaans - af\n  * Arabic - ar\n  * Armenian - am\n  * Azerbaijani - az\n  * Belarusian - be\n  * Bosnian - bs\n  * Bulgarian - bg\n  * Catalan - ca\n  * Chinese - zh\n  * Croatian - hr\n  * Czech - cs\n  * Danish - da\n  * Dutch - nl\n  * English - en\n  * Estonian - et\n  * Finnish - fi\n  * French - fr\n  * Galician - gl\n  * German - de\n  * Greek - el\n  * Hebrew - he\n  * Hindi - hi\n  * Hungarian - hu\n  * Icelandic - is\n  * Indonesian - id\n  * Italian - it\n  * Japanese - ja\n  * Kannada - kn\n  * Kazakh - kk\n  * Korean - ko\n  * Latvian - lv\n  * Lithuanian - lt \n  * Macedonian - mk\n  * Malay - ms\n  * Marathi - mr\n  * Maori - mi\n  * Nepali - ne\n  * Norwegian - no\n  * Persian - fa\n  * Polish - pl\n  * Portuguese - pt\n  * Romanian - ro\n  * Russian - ru\n  * Serbian - sr\n  * Slovak - sk\n  * Slovenian - sl\n  * Spanish - es\n  * Swahili - sw\n  * Swedish - sv\n  * Tagalog - tl\n  * Tamil - ta\n  * Thai - th\n  * Turkish - tr\n  * Ukrainian - uk\n  * Urdu - ur\n  * Vietnamese - vi\n  * Welsh - cy\n"
+        format:
+          type: string
+          default: TXT
+          enum:
+          - TXT
+          - SRT
+          - VTT
+          - SBV
+          description: "Optionally select one of the transcription formats (TXT is chosen if left blank). Options are as follows:\n  * TXT\n  * SRT\n  * VTT\n  * SBV\n"
+        granularity:
+          type: string
+          default: sentence
+          enum:
+          - 1-word
+          - 2-words
+          - sentence
+          description: Define the granularity of the subtitles. This works for SRT, VTT and SBV formats only.
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+        detail:
+          type: string
+      required:
+      - detail
   responses:
     '500':
       description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      headers:
+        X-Picsart-Correlation-Id:
+          schema:
+            type: string
+          description: The id which will help for troubleshooting request chain in the system.
+        X-Picsart-Ratelimit-Available:
+          schema:
+            type: integer
+          description: The number of available calls within the timeframe. See the X-Picsart-Ratelimit-Reset-Time.
+        X-Picsart-Ratelimit-Limit:
+          schema:
+            type: integer
+          description: The total number of requests that can be done within the timeframe. See the X-Picsart-Ratelimit-Reset-Time.
+        X-Picsart-Ratelimit-Reset-Time:
+          schema:
+            type: integer
+          description: The time when the used request count resets and the number of available calls gets equal to the total number.
+        X-Picsart-Credit-Available:
+          schema:
+            type: integer
+          description: The remaining number of the credits on the balance.
+    '404':
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      headers:
+        X-Picsart-Correlation-Id:
+          schema:
+            type: string
+          description: The id which will help for troubleshooting request chain in the system.
+        X-Picsart-Ratelimit-Available:
+          schema:
+            type: integer
+          description: The number of available calls within the timeframe. See the X-Picsart-Ratelimit-Reset-Time.
+        X-Picsart-Ratelimit-Limit:
+          schema:
+            type: integer
+          description: The total number of requests that can be done within the timeframe. See the X-Picsart-Ratelimit-Reset-Time.
+        X-Picsart-Ratelimit-Reset-Time:
+          schema:
+            type: integer
+          description: The time when the used request count resets and the number of available calls gets equal to the total number.
+        X-Picsart-Credit-Available:
+          schema:
+            type: integer
+          description: The remaining number of the credits on the balance.
+    '402':
+      description: Payment Required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      headers:
+        X-Picsart-Correlation-Id:
+          schema:
+            type: string
+          description: The id which will help for troubleshooting request chain in the system.
+        X-Picsart-Ratelimit-Available:
+          schema:
+            type: integer
+          description: The number of available calls within the timeframe. See the X-Picsart-Ratelimit-Reset-Time.
+        X-Picsart-Ratelimit-Limit:
+          schema:
+            type: integer
+          description: The total number of requests that can be done within the timeframe. See the X-Picsart-Ratelimit-Reset-Time.
+        X-Picsart-Ratelimit-Reset-Time:
+          schema:
+            type: integer
+          description: The time when the used request count resets and the number of available calls gets equal to the total number.
+        X-Picsart-Credit-Available:
+          schema:
+            type: integer
+          description: The remaining number of the credits on the balance.
+    '413':
+      description: Request Entity Too Large
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      headers:
+        X-Picsart-Correlation-Id:
+          schema:
+            type: string
+          description: The id which will help for troubleshooting request chain in the system.
+        X-Picsart-Ratelimit-Available:
+          schema:
+            type: integer
+          description: The number of available calls within the timeframe. See the X-Picsart-Ratelimit-Reset-Time.
+        X-Picsart-Ratelimit-Limit:
+          schema:
+            type: integer
+          description: The total number of requests that can be done within the timeframe. See the X-Picsart-Ratelimit-Reset-Time.
+        X-Picsart-Ratelimit-Reset-Time:
+          schema:
+            type: integer
+          description: The time when the used request count resets and the number of available calls gets equal to the total number.
+        X-Picsart-Credit-Available:
+          schema:
+            type: integer
+          description: The remaining number of the credits on the balance.
+    '431':
+      description: Request Header Fields Too Large
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      headers:
+        X-Picsart-Correlation-Id:
+          schema:
+            type: string
+          description: The id which will help for troubleshooting request chain in the system.
+        X-Picsart-Ratelimit-Available:
+          schema:
+            type: integer
+          description: The number of available calls within the timeframe. See the X-Picsart-Ratelimit-Reset-Time.
+        X-Picsart-Ratelimit-Limit:
+          schema:
+            type: integer
+          description: The total number of requests that can be done within the timeframe. See the X-Picsart-Ratelimit-Reset-Time.
+        X-Picsart-Ratelimit-Reset-Time:
+          schema:
+            type: integer
+          description: The time when the used request count resets and the number of available calls gets equal to the total number.
+        X-Picsart-Credit-Available:
+          schema:
+            type: integer
+          description: The remaining number of the credits on the balance.
+    '429':
+      description: Too Many Requests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      headers:
+        X-Picsart-Correlation-Id:
+          schema:
+            type: string
+          description: The id which will help for troubleshooting request chain in the system.
+        X-Picsart-Ratelimit-Available:
+          schema:
+            type: integer
+          description: The number of available calls within the timeframe. See the X-Picsart-Ratelimit-Reset-Time.
+        X-Picsart-Ratelimit-Limit:
+          schema:
+            type: integer
+          description: The total number of requests that can be done within the timeframe. See the X-Picsart-Ratelimit-Reset-Time.
+        X-Picsart-Ratelimit-Reset-Time:
+          schema:
+            type: integer
+          description: The time when the used request count resets and the number of available calls gets equal to the total number.
+        X-Picsart-Credit-Available:
+          schema:
+            type: integer
+          description: The remaining number of the credits on the balance.
+    '405':
+      description: Method Not Allowed
       content:
         application/json:
           schema:
@@ -202,33 +492,6 @@ components:
           schema:
             type: integer
           description: The remaining number of the credits on the balance.
-    '402':
-      description: Payment Required
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-      headers:
-        X-Picsart-Correlation-Id:
-          schema:
-            type: string
-          description: The id which will help for troubleshooting request chain in the system.
-        X-Picsart-Ratelimit-Available:
-          schema:
-            type: integer
-          description: The number of available calls within the timeframe. See the X-Picsart-Ratelimit-Reset-Time.
-        X-Picsart-Ratelimit-Limit:
-          schema:
-            type: integer
-          description: The total number of requests that can be done within the timeframe. See the X-Picsart-Ratelimit-Reset-Time.
-        X-Picsart-Ratelimit-Reset-Time:
-          schema:
-            type: integer
-          description: The time when the used request count resets and the number of available calls gets equal to the total number.
-        X-Picsart-Credit-Available:
-          schema:
-            type: integer
-          description: The remaining number of the credits on the balance.
     '401':
       description: Unauthorized
       content:
@@ -256,8 +519,8 @@ components:
           schema:
             type: integer
           description: The remaining number of the credits on the balance.
-    '405':
-      description: Method Not Allowed
+    '403':
+      description: Forbidden
       content:
         application/json:
           schema:
@@ -310,170 +573,8 @@ components:
           schema:
             type: integer
           description: The remaining number of the credits on the balance.
-    '403':
-      description: Forbidden
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-      headers:
-        X-Picsart-Correlation-Id:
-          schema:
-            type: string
-          description: The id which will help for troubleshooting request chain in the system.
-        X-Picsart-Ratelimit-Available:
-          schema:
-            type: integer
-          description: The number of available calls within the timeframe. See the X-Picsart-Ratelimit-Reset-Time.
-        X-Picsart-Ratelimit-Limit:
-          schema:
-            type: integer
-          description: The total number of requests that can be done within the timeframe. See the X-Picsart-Ratelimit-Reset-Time.
-        X-Picsart-Ratelimit-Reset-Time:
-          schema:
-            type: integer
-          description: The time when the used request count resets and the number of available calls gets equal to the total number.
-        X-Picsart-Credit-Available:
-          schema:
-            type: integer
-          description: The remaining number of the credits on the balance.
-    '413':
-      description: Request Entity Too Large
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-      headers:
-        X-Picsart-Correlation-Id:
-          schema:
-            type: string
-          description: The id which will help for troubleshooting request chain in the system.
-        X-Picsart-Ratelimit-Available:
-          schema:
-            type: integer
-          description: The number of available calls within the timeframe. See the X-Picsart-Ratelimit-Reset-Time.
-        X-Picsart-Ratelimit-Limit:
-          schema:
-            type: integer
-          description: The total number of requests that can be done within the timeframe. See the X-Picsart-Ratelimit-Reset-Time.
-        X-Picsart-Ratelimit-Reset-Time:
-          schema:
-            type: integer
-          description: The time when the used request count resets and the number of available calls gets equal to the total number.
-        X-Picsart-Credit-Available:
-          schema:
-            type: integer
-          description: The remaining number of the credits on the balance.
-    '404':
-      description: Not Found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-      headers:
-        X-Picsart-Correlation-Id:
-          schema:
-            type: string
-          description: The id which will help for troubleshooting request chain in the system.
-        X-Picsart-Ratelimit-Available:
-          schema:
-            type: integer
-          description: The number of available calls within the timeframe. See the X-Picsart-Ratelimit-Reset-Time.
-        X-Picsart-Ratelimit-Limit:
-          schema:
-            type: integer
-          description: The total number of requests that can be done within the timeframe. See the X-Picsart-Ratelimit-Reset-Time.
-        X-Picsart-Ratelimit-Reset-Time:
-          schema:
-            type: integer
-          description: The time when the used request count resets and the number of available calls gets equal to the total number.
-        X-Picsart-Credit-Available:
-          schema:
-            type: integer
-          description: The remaining number of the credits on the balance.
     '415':
       description: Unsupported Media Type
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-      headers:
-        X-Picsart-Correlation-Id:
-          schema:
-            type: string
-          description: The id which will help for troubleshooting request chain in the system.
-        X-Picsart-Ratelimit-Available:
-          schema:
-            type: integer
-          description: The number of available calls within the timeframe. See the X-Picsart-Ratelimit-Reset-Time.
-        X-Picsart-Ratelimit-Limit:
-          schema:
-            type: integer
-          description: The total number of requests that can be done within the timeframe. See the X-Picsart-Ratelimit-Reset-Time.
-        X-Picsart-Ratelimit-Reset-Time:
-          schema:
-            type: integer
-          description: The time when the used request count resets and the number of available calls gets equal to the total number.
-        X-Picsart-Credit-Available:
-          schema:
-            type: integer
-          description: The remaining number of the credits on the balance.
-    '400':
-      description: Bad Request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-      headers:
-        X-Picsart-Correlation-Id:
-          schema:
-            type: string
-          description: The id which will help for troubleshooting request chain in the system.
-        X-Picsart-Ratelimit-Available:
-          schema:
-            type: integer
-          description: The number of available calls within the timeframe. See the X-Picsart-Ratelimit-Reset-Time.
-        X-Picsart-Ratelimit-Limit:
-          schema:
-            type: integer
-          description: The total number of requests that can be done within the timeframe. See the X-Picsart-Ratelimit-Reset-Time.
-        X-Picsart-Ratelimit-Reset-Time:
-          schema:
-            type: integer
-          description: The time when the used request count resets and the number of available calls gets equal to the total number.
-        X-Picsart-Credit-Available:
-          schema:
-            type: integer
-          description: The remaining number of the credits on the balance.
-    '431':
-      description: Request Header Fields Too Large
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-      headers:
-        X-Picsart-Correlation-Id:
-          schema:
-            type: string
-          description: The id which will help for troubleshooting request chain in the system.
-        X-Picsart-Ratelimit-Available:
-          schema:
-            type: integer
-          description: The number of available calls within the timeframe. See the X-Picsart-Ratelimit-Reset-Time.
-        X-Picsart-Ratelimit-Limit:
-          schema:
-            type: integer
-          description: The total number of requests that can be done within the timeframe. See the X-Picsart-Ratelimit-Reset-Time.
-        X-Picsart-Ratelimit-Reset-Time:
-          schema:
-            type: integer
-          description: The time when the used request count resets and the number of available calls gets equal to the total number.
-        X-Picsart-Credit-Available:
-          schema:
-            type: integer
-          description: The remaining number of the credits on the balance.
-    '429':
-      description: Too Many Requests
       content:
         application/json:
           schema:
@@ -549,120 +650,33 @@ components:
           schema:
             type: integer
           description: The remaining number of the credits on the balance.
-  schemas:
-    Error:
-      type: object
-      properties:
-        message:
-          type: string
-        detail:
-          type: string
-      required:
-      - detail
-    401_Error:
-      type: object
-      properties:
-        code:
-          type: integer
-          example: 401
-        message:
-          type: string
-          example: Unauthorized
-        detail:
-          type: string
-      required:
-      - detail
-    TranscribeParameters:
-      type: object
-      properties:
-        language:
-          type: string
-          default: en
-          enum:
-          - af
-          - ar
-          - am
-          - az
-          - be
-          - bs
-          - bg
-          - ca
-          - zh
-          - hr
-          - cs
-          - da
-          - nl
-          - en
-          - et
-          - fi
-          - fr
-          - gl
-          - de
-          - el
-          - he
-          - hi
-          - hu
-          - is
-          - id
-          - it
-          - ja
-          - kn
-          - kk
-          - ko
-          - lv
-          - lt
-          - mk
-          - ms
-          - mr
-          - mi
-          - ne
-          - false
-          - fa
-          - pl
-          - pt
-          - ro
-          - ru
-          - sr
-          - sk
-          - sl
-          - es
-          - sw
-          - sv
-          - tl
-          - ta
-          - th
-          - tr
-          - uk
-          - ur
-          - vi
-          - cy
-          description: "Optionally select one of the languages in the 2-character format (ISO 639-1). Options are as follows:\n  * Afrikaans - af\n  * Arabic - ar\n  * Armenian - am\n  * Azerbaijani - az\n  * Belarusian - be\n  * Bosnian - bs\n  * Bulgarian - bg\n  * Catalan - ca\n  * Chinese - zh\n  * Croatian - hr\n  * Czech - cs\n  * Danish - da\n  * Dutch - nl\n  * English - en\n  * Estonian - et\n  * Finnish - fi\n  * French - fr\n  * Galician - gl\n  * German - de\n  * Greek - el\n  * Hebrew - he\n  * Hindi - hi\n  * Hungarian - hu\n  * Icelandic - is\n  * Indonesian - id\n  * Italian - it\n  * Japanese - ja\n  * Kannada - kn\n  * Kazakh - kk\n  * Korean - ko\n  * Latvian - lv\n  * Lithuanian - lt \n  * Macedonian - mk\n  * Malay - ms\n  * Marathi - mr\n  * Maori - mi\n  * Nepali - ne\n  * Norwegian - no\n  * Persian - fa\n  * Polish - pl\n  * Portuguese - pt\n  * Romanian - ro\n  * Russian - ru\n  * Serbian - sr\n  * Slovak - sk\n  * Slovenian - sl\n  * Spanish - es\n  * Swahili - sw\n  * Swedish - sv\n  * Tagalog - tl\n  * Tamil - ta\n  * Thai - th\n  * Turkish - tr\n  * Ukrainian - uk\n  * Urdu - ur\n  * Vietnamese - vi\n  * Welsh - cy\n"
-        format:
-          type: string
-          default: TXT
-          enum:
-          - TXT
-          - SRT
-          - VTT
-          - SBV
-          description: "Optionally select one of the transcription formats (TXT is chosen if left blank). Options are as follows:\n  * TXT\n  * SRT\n  * VTT\n  * SBV\n"
-        granularity:
-          type: string
-          default: sentence
-          enum:
-          - 1-word
-          - 2-words
-          - sentence
-          description: Define the granularity of the subtitles. This works for SRT, VTT and SBV formats only.
-    TranscribeFileParameters:
-      type: object
-      properties:
-        file_url:
-          type: string
-          description: Source video or audio URL. The maximum file size is 25mb.
-          maxLength: 2083
-          minLength: 1
-          format: uri
+    '400':
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      headers:
+        X-Picsart-Correlation-Id:
+          schema:
+            type: string
+          description: The id which will help for troubleshooting request chain in the system.
+        X-Picsart-Ratelimit-Available:
+          schema:
+            type: integer
+          description: The number of available calls within the timeframe. See the X-Picsart-Ratelimit-Reset-Time.
+        X-Picsart-Ratelimit-Limit:
+          schema:
+            type: integer
+          description: The total number of requests that can be done within the timeframe. See the X-Picsart-Ratelimit-Reset-Time.
+        X-Picsart-Ratelimit-Reset-Time:
+          schema:
+            type: integer
+          description: The time when the used request count resets and the number of available calls gets equal to the total number.
+        X-Picsart-Credit-Available:
+          schema:
+            type: integer
+          description: The remaining number of the credits on the balance.
   securitySchemes:
     apiKey:
       type: apiKey

@@ -72,7 +72,8 @@
     "tag 'Utilities' spans 4 source specs (picsart-genai-tools-api-openapi-original.yml, picsart-image-tools-api-openapi-original.yml, picsart-variable-data-tools-api-openapi-original.yml, picsart-video-tools-api-openapi-original.yml): per-path servers applied",
     "tag 'Effects' spans 2 source specs (picsart-image-tools-api-openapi-original.yml, picsart-video-tools-api-openapi-original.yml): per-path servers applied",
     "tag 'Remove Background' spans 2 source specs (picsart-image-tools-api-openapi-original.yml, picsart-video-tools-api-openapi-original.yml): per-path servers applied",
-    "tag 'Watermark' spans 2 source specs (picsart-image-tools-api-openapi-original.yml, picsart-video-tools-api-openapi-original.yml): per-path servers applied"
+    "tag 'Watermark' spans 2 source specs (picsart-image-tools-api-openapi-original.yml, picsart-video-tools-api-openapi-original.yml): per-path servers applied",
+    "apis.yml register: already-registered"
   ],
   "skipped": [
     "picsart-ads-api-openapi.yml: previously refined output, superseded by openapi/_original/",
