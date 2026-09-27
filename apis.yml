@@ -60,7 +60,7 @@ tags:
 - Image Processing
 - Video
 - Generative AI
-- Machine-Learning
+- Machine Learning
 - Media
 - Content Creation
 - Developer Tools
@@ -75,6 +75,7 @@ tags_raw:
 - Media
 - Content Creation
 - Developer Tools
+- Machine-Learning
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
