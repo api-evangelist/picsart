@@ -315,6 +315,8 @@ apis:
   - type: OpenAPI
     url: openapi/picsart-watermark-api-openapi.yml
 common:
+- type: Plans
+  url: plans/picsart-plans-pricing.yml
 - type: CapabilityMap
   url: capabilities/picsart-capability-edges.yml
   name: Picsart Business Capability Map
