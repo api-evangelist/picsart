@@ -1,0 +1,82 @@
+# Pricing transcribed from the provider's own page — see provenance. Numbers are quoted, not derived.
+generated: '2026-10-07'
+method: searched
+source: https://picsart.io/pricing/
+sources:
+- https://picsart.io/pricing/
+- https://picsart.io/pricing
+provenance:
+  tool: all/0-working/economics/harvest_pricing.py
+  run: 20261007T113201
+  grounding: every price_text was found verbatim in the fetched page text
+audience: developer-api
+pricing_basis: per-call
+delivery:
+  delivery: managed
+  method: page
+  read: '2026-10-07'
+published: true
+note: Pricing page describes credit-based pay-as-you-go with free basic endpoints; only numeric price
+  shown is '5 free credits'. Actual per-service rates are behind a 'See service pricing' link.
+plan_count: 4
+plans:
+- name: Free trial
+  price_text: 5 free credits
+  price: 5
+  period: none
+  unit: credits
+  included_quota: Multiple API Keys, 30 APIs, No hidden costs, No contract, Cancel anytime
+  overage: Pay-as-you go with overdrafts
+- name: Per Call Pricing
+  price_text: Per Call Pricing
+  period: month
+  unit: call
+  included_quota: low volume monthly subscription plans
+- name: Bulk Pricing
+  price_text: Bulk Pricing
+  period: none
+  included_quota: Tiered discounts as your volume grows
+- name: Annual Commitments
+  price_text: Talk to sales
+  period: year
+  included_quota: increased API performance and 24/7 integration support
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - hybrid
+  - metered
+  units:
+  - credit
+  - request
+  plans:
+  - name: Free trial
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - credit
+    periods:
+    - none
+  - name: Per Call Pricing
+    access: other
+    model: metered
+    model_how: derived
+    units:
+    - request
+    periods:
+    - month
+  - name: Bulk Pricing
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods:
+    - none
+  - name: Annual Commitments
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods:
+    - year
